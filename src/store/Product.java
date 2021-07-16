@@ -1,4 +1,4 @@
-package loja;
+package store;
 
 public class Product {
 

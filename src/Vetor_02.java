@@ -1,7 +1,7 @@
 import java.util.Locale;
 import java.util.Scanner;
 
-import loja.Product;
+import store.Product;
 
 public class Vetor_02 {
 
