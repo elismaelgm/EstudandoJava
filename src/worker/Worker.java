@@ -1,4 +1,4 @@
-package Worker;
+package worker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
