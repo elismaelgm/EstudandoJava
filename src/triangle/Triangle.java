@@ -1,4 +1,4 @@
-package areaTriangulo;
+package triangle;
 
 public class Triangle {
 
