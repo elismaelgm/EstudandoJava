@@ -7,31 +7,44 @@ import java.util.Scanner;
 
 public class MainReservation {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in); 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		System.out.print("Room number: ");
-		int roomNumber = sc.nextInt();
-		System.out.print("Check-in date (dd/MM/yyyy): ");
-		Date checkin = sdf.parse(sc.next());
-		System.out.print("Check-out date (dd/MM/yyyy): ");
-		Date checkout = sdf.parse(sc.next());
+		try {
 		
-		Reservation reserv = new Reservation(roomNumber, checkin, checkout);
-		System.out.println(reserv);
+			System.out.print("Room number: ");
+			int roomNumber = sc.nextInt();
+			System.out.print("Check-in date (dd/MM/yyyy): ");
+			Date checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date (dd/MM/yyyy): ");
+			Date checkOut = sdf.parse(sc.next());
+			
+			Reservation reserv = new Reservation(roomNumber, checkIn, checkOut);
+			System.out.println(reserv);
+			
+			System.out.println();
+			
+			System.out.println("Enter data to update the reservation: ");
+			System.out.print("Check-in date (dd/MM/yyyy): ");
+			checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date (dd/MM/yyyy): ");
+			checkOut = sdf.parse(sc.next());
+			reserv.updateDates(checkIn, checkOut);
+			
+			System.out.println(reserv);
+			
+		} catch (DomainException e) {
+			System.out.println(e.getMessage());
+		} catch (ParseException e) {
+			System.out.println("Invalid date format");
+		} catch (RuntimeException e) {
+			System.out.println("Unexpected error");
+		} finally {
+			sc.close();
+		}
 		
-		System.out.println();
-		
-		System.out.println("Enter data to update the reservation: ");
-		System.out.print("Check-in date (dd/MM/yyyy): ");
-		checkin = sdf.parse(sc.next());
-		System.out.print("Check-out date (dd/MM/yyyy): ");
-		checkout = sdf.parse(sc.next());
-		reserv.updateDates(checkin, checkout);
-		System.out.println(reserv);
-
 	}
 
 }

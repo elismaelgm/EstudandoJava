@@ -1,8 +1,8 @@
 package reservation;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Reservation {
 
@@ -10,6 +10,7 @@ public class Reservation {
 	private Date checkin;
 	private Date checkout;
 	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Reservation() {
 		
@@ -36,26 +37,28 @@ public class Reservation {
 		return checkout;
 	}
 	
-	public Integer duration() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(checkout);
-		int out = cal.get(Calendar.DATE);
-		cal.setTime(checkin);
-		int in = cal.get(Calendar.DATE);
-		
-		return out - in;
+	public Long duration() {
+		long diff = this.checkout.getTime() - this.checkin.getTime();
+		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
 	
-	public void updateDates(Date checkin, Date checkout) {
-		if (checkout)
-		this.checkin = checkin;
-		this.checkout = checkout;
+	public void updateDates(Date checkIn, Date checkOut) {
+		
+		Date now = new Date();
+		if (checkIn.after(checkOut)) {
+			throw new DomainException("Erro in reservation: Check-out date must be after check-in date.");
+		} 
+		if (checkOut.before(now) || checkIn.before(now)) {
+			throw new DomainException("Erro in reservation: Reservation dates for update must be future dates.");
+		}
+		this.checkin = checkIn;
+		this.checkout = checkOut;
+		
 	}
 	
 	@Override
 	public String toString() {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("Reservation: Room ");
