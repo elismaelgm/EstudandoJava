@@ -1,6 +1,6 @@
 package shape;
 
-public class Circle extends Shape {
+public class Circle extends AbstractShape {
 
 	public Double radius;
 	
